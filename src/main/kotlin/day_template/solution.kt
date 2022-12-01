@@ -1,6 +1,11 @@
 package day_template
 
-fun solve(){
+import java.io.File
+
+fun main(){
+    val input = File("src/main/kotlin/day_template/input.txt")
+        .readLines()
+
     println("Part One: ")
     println("Part Two: ")
 }

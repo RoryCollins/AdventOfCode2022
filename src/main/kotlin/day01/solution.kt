@@ -2,7 +2,7 @@ package day01
 
 import java.io.File
 
-val input = File("src/main/kotlin/day01/input.txt")
+val topThreeCalorieTotals = File("src/main/kotlin/day01/input.txt")
     .readText()
     .split("\n\n", "\r\n\r\n")
     .map{elf ->
@@ -12,6 +12,6 @@ val input = File("src/main/kotlin/day01/input.txt")
     .take(3)
 
 fun main(){
-    println("Part One: ${input.first()}")
-    println("Part Two: ${input.sum()}")
+    println("Part One: ${topThreeCalorieTotals.first()}")
+    println("Part Two: ${topThreeCalorieTotals.sum()}")
 }
