@@ -9,7 +9,7 @@ val sortedCalorieTotals =
         .sortedDescending()
 
 fun countCalories(elf: String): Int {
-    return elf.split("\n", "\r\n").sumOf { it.toInt() }
+    return elf.lines().sumOf { it.toInt() }
 }
 
 fun main() {
