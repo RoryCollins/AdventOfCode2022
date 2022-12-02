@@ -7,8 +7,7 @@ enum class Shape(){
             return when(move) {
                 "X","A" -> ROCK
                 "Y","B" -> PAPER
-                "Z","C" -> SCISSORS
-                else -> {error("Oh no")}
+                else -> SCISSORS
             }
         }
     }
