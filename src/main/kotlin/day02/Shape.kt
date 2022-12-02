@@ -3,8 +3,8 @@ package day02
 enum class Shape(){
     ROCK, PAPER, SCISSORS;
     companion object{
-        fun get(move: String) : Shape {
-            return when(move) {
+        fun get(shape: String) : Shape {
+            return when(shape) {
                 "X","A" -> ROCK
                 "Y","B" -> PAPER
                 else -> SCISSORS
