@@ -1,5 +1,7 @@
 package day02
 
+import day02.Shape.*
+
 class Game(private val player1 : Shape, private val player2: Shape) {
     fun scoreGame(): Int {
         return scoreShape() + scoreResult()
@@ -7,9 +9,9 @@ class Game(private val player1 : Shape, private val player2: Shape) {
 
     private fun scoreShape(): Int {
         return when (player2) {
-            Shape.ROCK -> 1
-            Shape.PAPER -> 2
-            Shape.SCISSORS -> 3
+            ROCK -> 1
+            PAPER -> 2
+            SCISSORS -> 3
         }
     }
 
