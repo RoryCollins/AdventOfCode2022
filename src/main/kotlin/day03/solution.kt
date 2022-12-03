@@ -7,9 +7,9 @@ val rucksacks = File("src/main/kotlin/day03/input.txt")
 
 val itemTypeValues = (('a'..'z').toList() + ('A'..'Z').toList()).zip((1..52)).toMap()
 
-fun splitIntoCompartments (rucksack : String) : Pair<Set<Char>, Set<Char>>{
+fun splitIntoCompartments(rucksack: String): Pair<Set<Char>, Set<Char>> {
     val half = rucksack.length / 2
-    return rucksack.take(half).toSet() to rucksack.substring(half).toSet()
+    return rucksack.take(half).toSet() to rucksack.drop(half).toSet()
 }
 
 fun main() {
