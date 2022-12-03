@@ -20,7 +20,7 @@ fun main() {
     val commonItemTypesBetweenElves = rucksacks
         .map { it.toSet() }
         .windowed(3, 3)
-        .map { it[0].intersect(it[1]).intersect(it[2]).single() }
+        .map { it.reduce { acc, next -> acc.intersect(next) }.single() }
 
     println("Part One: ${commonItemTypesBetweenRucksackCompartments.sumOf { itemTypeValues[it]!! }}")
     println("Part Two: ${commonItemTypesBetweenElves.sumOf { itemTypeValues[it]!! }}")
