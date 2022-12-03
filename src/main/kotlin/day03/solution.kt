@@ -13,15 +13,15 @@ fun splitIntoCompartments(rucksack: String): Pair<Set<Char>, Set<Char>> {
 }
 
 fun main() {
-    val commonItemTypesBetweenRucksackCompartments = rucksacks
+    val commonItemTypeBetweenRucksackCompartments = rucksacks
         .map { splitIntoCompartments(it) }
         .map { it.first.intersect(it.second).single() }
 
-    val commonItemTypesBetweenElves = rucksacks
+    val commonItemTypeBetweenElves = rucksacks
         .map { it.toSet() }
         .windowed(3, 3)
         .map { it.reduce { acc, next -> acc.intersect(next) }.single() }
 
-    println("Part One: ${commonItemTypesBetweenRucksackCompartments.sumOf { itemTypeValues[it]!! }}")
-    println("Part Two: ${commonItemTypesBetweenElves.sumOf { itemTypeValues[it]!! }}")
+    println("Part One: ${commonItemTypeBetweenRucksackCompartments.sumOf { itemTypeValues[it]!! }}")
+    println("Part Two: ${commonItemTypeBetweenElves.sumOf { itemTypeValues[it]!! }}")
 }
