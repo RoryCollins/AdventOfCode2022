@@ -8,25 +8,22 @@ val ranges = File("src/main/kotlin/day04/input.txt")
         pair.split(",")
             .map{ convertToRange(it) }
     }
-
-fun hasFullyContainedAssignment(range1 : Set<Int>, range2: Set<Int>) : Boolean{
-    return range1.all{range2.contains(it)} || range2.all{range1.contains(it)}
-}
+    .map{it.first() to it.last()}
 
 fun convertToRange(assignment: String) : Set<Int> {
     val assignments = assignment.split("-")
         .map{it.toInt()}
     return (assignments[0]..assignments[1]).toSet()
 }
+fun hasFullyContainedAssignment(ranges : Pair<Set<Int>, Set<Int>>) : Boolean{
+    val (range1, range2) = ranges
+    return range1.all{range2.contains(it)} || range2.all{range1.contains(it)}
+}
+fun hasPartiallyOverlappingAssignment(ranges : Pair<Set<Int>, Set<Int>>) : Boolean{
+    return ranges.first.intersect(ranges.second).any()
+}
 
 fun main(){
-    val partOne = ranges.map{
-        hasFullyContainedAssignment(it.first(), it.last())
-    }
-
-    val partTwo = ranges.map{
-        it.first().intersect(it.last()).any()
-    }
-    println("Part One: ${partOne.count{ it }}")
-    println("Part Two: ${partTwo.count{ it }}")
+    println("Part One: ${ranges.count{ hasFullyContainedAssignment(it) }}")
+    println("Part Two: ${ranges.count{ hasPartiallyOverlappingAssignment(it) }}")
 }
