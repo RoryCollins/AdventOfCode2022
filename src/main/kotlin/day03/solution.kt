@@ -7,21 +7,29 @@ val rucksacks = File("src/main/kotlin/day03/input.txt")
 
 val itemTypeValues = (('a'..'z').toList() + ('A'..'Z').toList()).zip((1..52)).toMap()
 
-fun splitIntoCompartments(rucksack: String): Pair<Set<Char>, Set<Char>> {
+fun splitIntoCompartments(rucksack: String): List<Set<Char>> {
     val half = rucksack.length / 2
-    return rucksack.take(half).toSet() to rucksack.drop(half).toSet()
+    return listOf(rucksack.take(half).toSet(), rucksack.drop(half).toSet())
+}
+
+fun getSingleCommonItemType(itemTypes: List<Set<Char>>): Char {
+    return itemTypes.reduce { acc, next -> acc.intersect(next) }.single()
+}
+
+fun Char.priority() : Int {
+    return itemTypeValues[this]!!
 }
 
 fun main() {
     val commonItemTypeBetweenRucksackCompartments = rucksacks
         .map { splitIntoCompartments(it) }
-        .map { it.first.intersect(it.second).single() }
+        .map { getSingleCommonItemType(it) }
 
     val commonItemTypeBetweenElves = rucksacks
         .map { it.toSet() }
         .windowed(3, 3)
-        .map { it.reduce { acc, next -> acc.intersect(next) }.single() }
+        .map { getSingleCommonItemType(it) }
 
-    println("Part One: ${commonItemTypeBetweenRucksackCompartments.sumOf { itemTypeValues[it]!! }}")
-    println("Part Two: ${commonItemTypeBetweenElves.sumOf { itemTypeValues[it]!! }}")
+    println("Part One: ${commonItemTypeBetweenRucksackCompartments.sumOf { it.priority() }}")
+    println("Part Two: ${commonItemTypeBetweenElves.sumOf { it.priority() }}")
 }
