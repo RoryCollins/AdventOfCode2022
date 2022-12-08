@@ -7,7 +7,7 @@ class Directory(private val name : String, val parent : Directory?){
     private lateinit var files : List<DeviceFile>
     fun addContent(contents : List<String>){
         directories = contents.map{it.split(" ")}.filter{it[0] == "dir"}.map{ Directory(it[1], this) }
-        files = contents.map{it.split(" ")}.filter{it[0].toIntOrNull() != null}.map{ DeviceFile(it[1], it[0].toInt()) }
+        files = contents.map{it.split(" ")}.filter{"""\d+""".toRegex().matches(it[0])}.map{ DeviceFile(it[1], it[0].toInt()) }
     }
 
     fun navigateTo(directoryName: String) : Directory {

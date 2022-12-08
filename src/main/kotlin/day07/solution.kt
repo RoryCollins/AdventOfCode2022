@@ -37,5 +37,5 @@ fun main() {
     val spaceRequired = 30000000 - (70000000 - root.getSize())
 
     println("Part One: ${directorySizes.filter { it <= 100000 }.sum()}")
-    println("Part Two: ${directorySizes.filter { it > spaceRequired }.min()}")
+    println("Part Two: ${directorySizes.filter { it >= spaceRequired }.min()}")
 }
