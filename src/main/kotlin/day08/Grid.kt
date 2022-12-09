@@ -1,5 +1,7 @@
 package day08
 
+import shared.Coordinate
+
 class Grid(private val input: List<List<Int>>) {
     fun heightAt(coordinate: Coordinate): Int {
         return input[coordinate.y][coordinate.x]

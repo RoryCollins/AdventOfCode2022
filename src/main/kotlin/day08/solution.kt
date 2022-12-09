@@ -1,4 +1,5 @@
 package day08
+import shared.Coordinate
 import java.io.File
 
 private val input = File("src/main/kotlin/day08/input.txt")
@@ -17,7 +18,7 @@ private val directions = listOf(
 fun main() {
     val grid = Grid(input)
     val coordinates = List(input.size) { y ->
-        List(input[y].size) { x -> Coordinate(x,y)}
+        List(input[y].size) { x -> Coordinate(x,y) }
     }.flatten()
 
     val treeVisibilities = coordinates.map{treeCoordinate ->
