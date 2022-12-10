@@ -57,7 +57,7 @@ fun getNewPosition(leader: Coordinate, current: Coordinate): Coordinate {
 }
 
 fun totalUniquePositionsVisitedByTailOfRopeWithSize(size : Int): Int {
-    val initialState = List(size) { KnotState(emptySet(), Coordinate(0, 0)) }
+    val initialState = List(size) { KnotState(emptySet(), Coordinate.Origin) }
     val result = input.fold(initialState) { acc, instruction -> processInstructionFoo(acc, instruction) }
     return result.last().history.count()
 }
