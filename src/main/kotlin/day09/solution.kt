@@ -46,6 +46,8 @@ fun getNewPosition(leader: Coordinate, current: Coordinate): Coordinate {
         Pair(2, -2) -> current.plus(Coordinate(1, -1))
         Pair(-2, 2) -> current.plus(Coordinate(-1, 1))
         Pair(-2, -2) -> current.plus(Coordinate(-1, -1))
+
+        // really want to be able to say `Pair(2, _) -> ...` :(
         Pair(2, 1), Pair(2, -1), Pair(2, 0) -> Coordinate(current.x + 1, leader.y)
         Pair(-2, 1), Pair(-2, -1), Pair(-2, 0) -> Coordinate(current.x - 1, leader.y)
         Pair(0, 2), Pair(1, 2), Pair(-1, 2) -> Coordinate(leader.x, current.y + 1)
