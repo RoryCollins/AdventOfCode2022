@@ -10,8 +10,8 @@ private val packets = File("src/main/kotlin/day13/input.txt")
 fun main() {
     val orderedPackets = packets
         .chunked(2)
-        .mapIndexed { index, ps -> index + 1 to ps[0].compareTo(ps[1]) }
-        .filter { it.second == -1 }
+        .mapIndexed { index, ps -> index + 1 to (ps.first() < ps.last()) }
+        .filter { it.second }
     println("Part One: ${orderedPackets.sumOf { it.first }}")
 
     val dividerOne = Packet.parse("[[2]]")
