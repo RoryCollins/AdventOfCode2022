@@ -9,10 +9,9 @@ private val input = File("src/main/kotlin/day13/input.txt")
 
 abstract class Packet : Comparable<Packet>{
     companion object{
-        fun parse(str: String) : Packet?{
-            if (str.isEmpty()) {
-                return null
-            }
+        fun parse(str: String) : Packet{
+            if(str == "[]")
+                return PacketComposite(emptyList())
             if(str.first().isDigit()){
                 return PacketValue(str.toInt())
             }
@@ -73,12 +72,12 @@ data class PacketValue(val value: Int) : Packet() {
 
 fun main(){
     val foo = input.mapIndexed{ index, it ->
-        index to Packet.parse(it[0])!!.compareTo(Packet.parse(it[1])!!)
+        index to Packet.parse(it[0]).compareTo(Packet.parse(it[1]))
     }
 
-    val dividerOne=Packet.parse("[[2]]")!!
-    val dividerTwo=Packet.parse("[[6]]")!!
-    val dividedInput = input.flatten().map{Packet.parse(it)!!} + listOf(dividerOne, dividerTwo)
+    val dividerOne=Packet.parse("[[2]]")
+    val dividerTwo=Packet.parse("[[6]]")
+    val dividedInput = input.flatten().map{Packet.parse(it)} + listOf(dividerOne, dividerTwo)
     val sortedPackets = dividedInput.sorted()
 
     println("Part One: ${foo.filter { it.second == -1 }.sumOf { it.first+1 }}")
