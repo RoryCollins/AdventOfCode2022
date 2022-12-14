@@ -12,5 +12,15 @@ data class Coordinate(val x: Int, val y: Int) {
         )
     }
 
+    fun to(other: Coordinate) : Set<Coordinate>{
+        return x.to(other.x).flatMap{newX -> y.to(other.y).map{newY -> Coordinate(newX, newY)}}.toSet()
+    }
+
+    private fun Int.to(that: Int) : List<Int>{
+        val range = if (this < that) this..that
+        else this.downTo(that)
+        return range.toList()
+    }
+
     fun plus(other: Coordinate) = Coordinate(x + other.x, y + other.y)
 }
