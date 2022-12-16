@@ -10,6 +10,11 @@ data class Coordinate(val x: Int, val y: Int) {
             Coordinate(0, 1),
             Coordinate(0, -1)
         )
+
+        fun of(str: String) : Coordinate {
+            val groups = """(\d+),(\d+)""".toRegex().find(str)!!.groups
+            return Coordinate(groups[1]!!.value.toInt(), groups[2]!!.value.toInt()*-1)
+        }
     }
 
     fun to(other: Coordinate) : Set<Coordinate>{

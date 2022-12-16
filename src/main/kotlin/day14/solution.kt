@@ -6,10 +6,7 @@ import java.io.File
 private val rockCoordinates = File("src/main/kotlin/day14/input.txt")
     .readLines()
     .map { line ->
-        line.split(" -> ").map {
-            val groups = """(\d+),(\d+)""".toRegex().find(it)!!.groups
-            Coordinate(groups[1]!!.value.toInt(), groups[2]!!.value.toInt()*-1)
-        }
+        line.split(" -> ").map { Coordinate.of(it) }
     }
     .map {
         it.fold(setOf(it[0])) { acc, c -> acc + acc.last().to(c) }
@@ -34,14 +31,11 @@ fun dropSand(coordinate: Coordinate, state: List<Coordinate>): Pair<Boolean, Lis
 
 
 fun main() {
-
-    Coordinate(0,0).to(Coordinate(10,0)).map{println(it)}
-
     var state = emptyList<Coordinate>()
     var exitsToTheAbyss = false
     var count = 0;
 
-    while(!exitsToTheAbyss){
+    while (!exitsToTheAbyss) {
         val foo = dropSand(Coordinate(500, 0), state)
         exitsToTheAbyss = foo.first
         state = foo.second
@@ -51,13 +45,13 @@ fun main() {
     println(count)
     printGrid(state)
 
-    println("Part One: ${count-1}")
+    println("Part One: ${count - 1}")
     println("Part Two: ")
 }
 
 private fun printGrid(sand: List<Coordinate>) {
-    val topLeft = Coordinate(rockCoordinates.minOf { it.x }-5, 0)
-    val bottomRight = Coordinate(rockCoordinates.maxOf { it.x }, rockBottom)
+    val topLeft = Coordinate(rockCoordinates.minOf { it.x } - 5, 0)
+    val bottomRight = Coordinate(rockCoordinates.maxOf { it.x } + 5, rockBottom - 5)
 
     for (yPos in topLeft.y.downTo(bottomRight.y)) {
         for (xPos in topLeft.x..bottomRight.x) {
