@@ -3,13 +3,13 @@ package day14
 import shared.Coordinate
 import java.io.File
 
-private val rockCoordinates = File("src/main/kotlin/day14/input_test.txt")
+private val rockCoordinates = File("src/main/kotlin/day14/input.txt")
     .readLines()
     .map { line ->
         line.split(" -> ").map { Coordinate.of(it) }
     }
     .map {
-        it.fold(setOf(it[0])) { acc, c -> acc + acc.last().to(c) }
+        it.fold(listOf(it[0])) { acc, c -> acc + acc.last().to(c) }.toSet()
     }
     .flatten()
 
@@ -46,8 +46,6 @@ fun main() {
         state = state + (foo.second to Type.SAND)
         count++
     }
-
-    println(count)
     printGrid(state)
 
     println("Part One: ${count - 1}")
