@@ -3,7 +3,7 @@ package day14
 import shared.Coordinate
 import java.io.File
 
-private val rockCoordinates = File("src/main/kotlin/day14/input.txt")
+private val rockCoordinates = File("src/main/kotlin/day14/input_test.txt")
     .readLines()
     .map { line ->
         line.split(" -> ").map { Coordinate.of(it) }
@@ -13,32 +13,37 @@ private val rockCoordinates = File("src/main/kotlin/day14/input.txt")
     }
     .flatten()
 
-//private val rockCoordinates = Coordinate(490,-20).to(Coordinate(505, -20))
+private enum class Type {
+    ROCK,
+    SAND,
+    SPACE
+}
 
 private val rockBottom = rockCoordinates.minOf { it.y }
 
-fun dropSand(coordinate: Coordinate, state: List<Coordinate>): Pair<Boolean, List<Coordinate>> {
+private tailrec fun findBottom(coordinate: Coordinate, state: Map<Coordinate, Type>) : Pair<Boolean, Coordinate> {
+    if(coordinate.y <= rockBottom)
+        return true to coordinate
     val candidates =
         listOf(Coordinate(0, -1), Coordinate(-1, -1), Coordinate(1, -1))
             .map { coordinate.plus(it) }
-            .filter { !(rockCoordinates + state).contains(it) }
-    if (candidates.isEmpty())
-        return false to state + coordinate
-    if (candidates.first().y < rockBottom)
-        return true to state
-    return dropSand(candidates.first(), state)
+            .filter { !state.containsKey(it) }
+    if (candidates.isEmpty()){
+        return false to coordinate
+    }
+    return findBottom(candidates.first(), state)
 }
 
 
 fun main() {
-    var state = emptyList<Coordinate>()
+    var state = rockCoordinates.associateWith { Type.ROCK }
     var exitsToTheAbyss = false
     var count = 0;
 
     while (!exitsToTheAbyss) {
-        val foo = dropSand(Coordinate(500, 0), state)
+        val foo = findBottom(Coordinate(500, 0), state)
         exitsToTheAbyss = foo.first
-        state = foo.second
+        state = state + (foo.second to Type.SAND)
         count++
     }
 
@@ -49,16 +54,17 @@ fun main() {
     println("Part Two: ")
 }
 
-private fun printGrid(sand: List<Coordinate>) {
-    val topLeft = Coordinate(rockCoordinates.minOf { it.x } - 5, 0)
-    val bottomRight = Coordinate(rockCoordinates.maxOf { it.x } + 5, rockBottom - 5)
+private fun printGrid(sand: Map<Coordinate, Type>) {
+    val topLeft = Coordinate(rockCoordinates.minOf { it.x }, 9)
+    val bottomRight = Coordinate(rockCoordinates.maxOf { it.x } , rockBottom)
 
     for (yPos in topLeft.y.downTo(bottomRight.y)) {
         for (xPos in topLeft.x..bottomRight.x) {
-            if (xPos == 500 && yPos == 0) print("X")
-            else if (rockCoordinates.contains(Coordinate(xPos, yPos))) print("#")
-            else if (sand.contains(Coordinate(xPos, yPos))) print("O")
-            else print(".")
+            when(sand.getOrDefault(Coordinate(xPos, yPos), Type.SPACE)){
+                Type.ROCK -> print("#")
+                Type.SAND -> print("O")
+                Type.SPACE -> print(" ")
+            }
         }
         print("\n")
     }
