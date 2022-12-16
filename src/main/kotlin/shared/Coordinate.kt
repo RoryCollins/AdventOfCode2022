@@ -1,5 +1,7 @@
 package shared
 
+import kotlin.math.abs
+
 data class Coordinate(val x: Int, val y: Int) {
     companion object {
         val Origin = Coordinate(0, 0)
@@ -19,6 +21,10 @@ data class Coordinate(val x: Int, val y: Int) {
 
     fun to(other: Coordinate) : Set<Coordinate>{
         return x.to(other.x).flatMap{newX -> y.to(other.y).map{newY -> Coordinate(newX, newY)}}.toSet()
+    }
+
+    fun manhattanDistanceTo(other : Coordinate) : Int{
+        return abs(x - other.x) + abs(y-other.y)
     }
 
     private fun Int.to(that: Int) : List<Int>{
